@@ -1,0 +1,148 @@
+swagger: "2.0"
+info:
+  description: "Assignment 2"
+  version: "0.0.1"
+  title: "Timeslot Service"
+  contact:
+    email: "matt.icb2007@gmail.com"
+host: "api.domain.au"
+basePath: "/v1"
+schemes:
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+tags:
+  - name: Timeslot
+    description: Timeslot related operations
+paths:
+  /timeslot/booking:
+    post:
+      summary: "enter booking details"
+      description: "populate database with the bookings"
+      parameters:
+      - in: body
+        name: "name"
+        required: True
+        schema:
+          $ref: "#/definitions/booking" 
+      responses: 
+        200:
+          description: "OK"
+          schema: 
+            $ref: "#/definitions/show_booking"
+        404:
+          description: "insert error. error in inserting"
+          schema:
+              type: object
+              properties:
+                Message:
+                  type: string
+                  example:
+                    "Insert Unsuccesfull"
+      tags:
+        - Timeslot
+    patch:
+      summary: "cancel booking"
+      description: "enter booking id and name to cancel booking"
+      parameters:
+        - name: cancel
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/cancel_timeslot'
+      responses:
+        200:
+          description: "Answer if the booking can be cancelled or no in the case if person no present in data"
+          schema:
+              type: object
+              properties:
+                status_cancelation:
+                  type: string
+                  example: "Cancelled"
+        404:
+          description: "No found"
+          schema:
+              type: object
+              properties:
+                status_cancelation:
+                  type: string
+                  example: "No possible Cancel"
+      tags:
+        - Timeslot
+        
+  /timeslot/{id}:
+    get:
+      summary: "check availability"
+      description: "enter booking id and name to cancel booking"
+      parameters:
+      - in: path
+        type: "string"
+        name: "id"
+        required: True
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/availability"  
+        
+        404:
+          description: "Not Found. cinema not found"
+          schema:
+              type: "object"
+              properties:
+                CinemaInformation:
+                  type: "string"
+                  example:
+                    "Not Found"
+      tags:
+        - Timeslot
+
+  
+definitions:
+    booking:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        tickets:
+          type: "string"
+        timeslot:
+          type: "string"
+        ttype:
+          type: "string"
+          
+    show_booking:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+        tickets:
+          type: "string"
+    
+  
+    cancel_timeslot:
+      type: "object"
+      properties:
+        booking_id:
+          type: "string"
+        name:
+          type: "string"
+    
+    availability:
+      type: "object"
+      properties:
+        available:
+          type: "string"
+        gold:
+          type: "string"
+        platinum:
+          type: "string"
+        silver:
+          type: "string"
+            
+  
+  

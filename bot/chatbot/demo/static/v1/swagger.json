@@ -1,0 +1,42 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "TestBot",
+    "version": "0.0.1",
+    "title": "Chatbot to test intents using Wit.ai"
+  },
+  "basePath": "/v1",
+  "paths": {
+    "/booker": {
+      "get": {
+        "summary": "test intents",
+        "description": "this endpoint takes a query parameter named 'expression' and returns a json object with 'answer' as key",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "expression",
+            "description": "Ask, Which movies are now showing?",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "answer": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

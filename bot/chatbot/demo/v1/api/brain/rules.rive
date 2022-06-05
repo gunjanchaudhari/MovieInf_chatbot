@@ -1,0 +1,20 @@
+! version = 2.0
+
+// CONFIRMATION SECTION
++[*](yes|yeah|of course|sure|go)[*]
+- Yes
+
++[*](no|dont|do not|not|nope|dont want)[*]
+- No
+
+// bye
++[*](bye|good bye|goodbye)[*]
+- Bye!
+
+//Greeting
++[*](hi|hello|hey)[*]
+- Hello, My name is Jake, I can with information related to movies or even booking tickets. What is your name?"
+
+//General
++ (thank|thanks|thank you)
+- You’re welcome :)

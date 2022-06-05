@@ -1,0 +1,415 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Movie Booking",
+    "version": "1.0.0",
+    "title": "Movie/Cinema Information",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "cinema",
+      "description": "Cinema related operations"
+    },
+    {
+      "name": "movie",
+      "description": "Movie related operations"
+    }
+  ],
+  "paths": {
+    "/cinema": {
+      "get": {
+        "summary": "get the list of cinemas",
+        "description": "this gets all the cinemas available",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/all_cinema"
+            }
+          },
+          "404": {
+            "description": "Not Found. error in finding list",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Message": {
+                  "type": "string",
+                  "example": "Not Found/ Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "cinema"
+        ]
+      }
+    },
+    "/cinema/{name}": {
+      "get": {
+        "summary": "get the information of a cinema",
+        "description": "this gets the information for requested cinema",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/cinema"
+            }
+          },
+          "404": {
+            "description": "Not Found. cinema not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "CinemaInformation": {
+                  "type": "string",
+                  "example": "Not Found"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "cinema"
+        ]
+      }
+    },
+    "/cinema/{name}/snacks": {
+      "get": {
+        "summary": "get the available snacks in a cinema",
+        "description": "fetch the snacks that are sold in a cinema",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/snacks"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "CinemaSnacks": {
+                  "type": "string",
+                  "example": "Not Found"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "cinema"
+        ]
+      }
+    },
+    "/cinema/{name}/now_showing": {
+      "get": {
+        "summary": "Get the now showing movies",
+        "description": "return a list of movies which are now showing",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/now_showing"
+            }
+          },
+          "404": {
+            "description": "Not Found. Now showing not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "NowShowing": {
+                  "type": "string",
+                  "example": "Not Found/Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "cinema"
+        ]
+      }
+    },
+    "/cinema/{name}/now_showing/{movie}/timeslot": {
+      "get": {
+        "summary": "Get the times of now showing movies",
+        "description": "return a list of times which are now showing",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "name",
+            "required": true
+          },
+          {
+            "in": "path",
+            "type": "string",
+            "name": "movie",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/get_timeslot"
+            }
+          },
+          "404": {
+            "description": "Not Found. Now showing not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "NowShowing": {
+                  "type": "string",
+                  "example": "Not Found/Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "cinema"
+        ]
+      }
+    },
+    "/movie/{name}/cinema": {
+      "get": {
+        "summary": "get where the movie is being shown",
+        "description": "provides a list of cinemas where requested movie is screened",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/all_cinema"
+            }
+          },
+          "404": {
+            "description": "Not Found. cinema_list not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "MovieInformation": {
+                  "type": "string",
+                  "example": "Not Found/ Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "movie"
+        ]
+      }
+    },
+    "/movie/{name}": {
+      "get": {
+        "summary": "get movie information",
+        "description": "return movie details such as genre and cast",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/movie"
+            }
+          }
+        },
+        "tags": [
+          "movie"
+        ]
+      }
+    },
+    "/movie": {
+      "get": {
+        "summary": "get now showing movies",
+        "description": "return now showing movies",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/now_showing"
+            }
+          }
+        },
+        "tags": [
+          "movie"
+        ]
+      }
+    },
+    "/movie/{name}/cinema/{cin_name}/timeslot": {
+      "get": {
+        "summary": "get suitable time slots",
+        "description": "return time slot passing movie, cinema and time",
+        "parameters": [
+          {
+            "in": "path",
+            "type": "string",
+            "name": "name",
+            "required": true
+          },
+          {
+            "in": "path",
+            "type": "string",
+            "name": "cin_name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/get_timeslot"
+            }
+          },
+          "404": {
+            "description": "Not Found. timeslot not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "timeslot": {
+                  "type": "string",
+                  "example": "Not Found/Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "movie"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "cinema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "all_cinema": {
+      "type": "object",
+      "properties": {
+        "cinema_list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "snacks": {
+      "type": "object",
+      "properties": {
+        "snacks": {
+          "type": "string"
+        }
+      }
+    },
+    "now_showing": {
+      "type": "object",
+      "properties": {
+        "movies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "get_timeslot": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "start_time": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "movie": {
+      "type": "object",
+      "properties": {
+        "movie": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "cast": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
